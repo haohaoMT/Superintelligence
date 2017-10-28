@@ -118,3 +118,4 @@ LS_COLORS 环境变量可改变此设置，可使用 dircolors 命令来设置�
 GNU coreutils online help: <http://www.gnu.org/software/coreutils/>
 请向<http://translationproject.org/team/zh_CN.html> 报告ls 的翻译错误
 要获取完整文档，请运行：info coreutils 'ls invocation'
+hahh
