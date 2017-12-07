@@ -1,0 +1,75 @@
+1.我要获取people表中row key 为rk0001 info列族的所有信息：
+
+get 'people' , 'rk0001', 'info'
+
+2.获取people表中row key 为rk0001, info列族为name ,gender的所有信息：
+
+get 'people' , 'rk0001', 'info:name', 'info:gender'
+
+3.获取people表中row key 为rk0001, info和data列族的所有信息：
+
+get 'people', 'rk0001', 'info', 'data'
+
+4.获取people表中row key 为rk0001, info列族下 版本号最新的三个信息：
+
+get 'people', 'rk0001', {COLUMN => 'info', VERSIONS=>3}
+
+5.获取people表中row key 为rk0001, info列族下size列版本号最新的三个信息：
+
+get 'people', 'rk0001', {COLUMN => 'info:size', VERSIONS=>3}
+
+6.删除数据：
+
+删除people表中行健为rk0001 列族info 下的name列删掉
+
+delete 'people', 'rk0001', 'info:name'
+
+7.清空表数据：
+
+truncate 'people'
+
+8.修改表结构
+
+如果你要修改表，那么首先要先把表停用！
+
+disable  'people'
+
+然后再增加两个列族：
+
+添加列族t1 :	alter 'people', NAME=> 'f1'
+添加列族t2:	alter 'people', NAME=> 'f2'
+
+然后我们再将这个表启动：
+
+enable 'people'
+
+查看一下：
+describe 'people'
+
+接下来我们删除一个列族：
+
+还是先停用表：
+
+disable  'people'
+
+删除列族 f1
+
+alter 'people' , NAME => 'f1', METHOD => 'delete'
+
+这里你如果不写 METHOD => 'delete' 那么hbase就会认为是添加一个列族了！！
+
+或者也可以用：alter  'people' ,'delete' => 'f2'
+
+再启动表：
+
+enable 'people' 
+
+查看表结构：
+
+describe 'people'
+
+没有f1 和 f2 两个列族了
+
+如果想退出hbase脚本就用: quit或者 exit 命令
+
+退出后，别忘了关闭hbase  ./stop-hbase.sh
